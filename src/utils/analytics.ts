@@ -6,39 +6,51 @@
 import { StoreData, SimulationParams, AnalyticsResult, AnalyticsStore } from "../types";
 
 export function computeAnalytics(data: StoreData[], simulation: SimulationParams): AnalyticsResult {
+  // Pré-cálculo dos totais do shopping para as fórmulas de CRD
+  const totalAreaShopping = data.reduce((acc, d) => acc + d.area, 0);
+  const totalCondominioShopping = data.reduce((acc, d) => acc + d.condominio, 0);
+
   // Apply simulation to data
   const simulatedData: AnalyticsStore[] = data.map(d => {
     let s_pago = d.pago;
     let s_faturado = d.faturado;
 
-    // Simulate occupancy gain (vaca -> ativa)
-    // (Logic can be expanded here in the future)
-
-    // Simulate reduction in delinquency
-    if (d.status === "ativa" && d.faturado > d.pago) {
-      const devendo = d.faturado - d.pago;
+    // Simulate reduction in delinquency (inadimplência = não pagou o condomínio todo)
+    if (d.status === "ativa" && d.condominio > d.pago) {
+      const devendo = d.condominio - d.pago;
       s_pago = d.pago + (devendo * (simulation.reductionInadimp / 100));
     }
 
     const custo_m2 = d.area ? d.condominio / d.area : 0;
-    const inadimplencia = s_faturado ? 1 - s_pago / s_faturado : 0;
     
-    // Custo de Ocupação: Quanto o custo fixo pesa no faturamento da loja
-    const custo_ocupacao = d.faturado > 0 ? (d.condominio / d.faturado) : 0;
+    // Inadimplência: O quanto deixou de pagar do condomínio
+    const inadimplencia = d.condominio > 0 ? 1 - (s_pago / d.condominio) : 0;
+    
+    // CTO (Custo Total de Ocupação): O peso do condomínio sobre as VENDAS (faturado da loja)
+    const cto = d.faturado > 0 ? (d.condominio / d.faturado) : 0;
+    const custo_ocupacao = cto; // Alias para compatibilidade legada
 
-    // Ponto de Equilíbrio: Faturamento necessário para ter um O.C. saudável de 15%
+    // CRD (Coeficiente de Rateio de Despesas)
+    // CRD por Área (O que deveria ser pago matematicamente)
+    const crd_area = totalAreaShopping > 0 ? (d.area / totalAreaShopping) : 0;
+    // CRD Financeiro (O que está efetivamente sendo cobrado no boleto)
+    const crd_financeiro = totalCondominioShopping > 0 ? (d.condominio / totalCondominioShopping) : 0;
+
+    // Ponto de Equilíbrio: Faturamento necessário para ter um CTO saudável de 15%
     const breakEven = d.condominio / 0.15;
 
-    // Índice de Esforço (0-10): Combinação de O.C. e Inadimplência
-    // O.C. ideal < 15%, Crítico > 25%
-    const esforco = Math.min(10, (custo_ocupacao * 20) + (inadimplencia * 30));
+    // Índice de Esforço (0-10): Combinação de CTO e Inadimplência
+    const esforco = Math.min(10, (cto * 20) + (inadimplencia * 30));
 
     return {
       ...d,
       s_pago,
       custo_m2,
       inadimplencia,
+      cto,
       custo_ocupacao,
+      crd_area,
+      crd_financeiro,
       breakEven,
       esforco,
       classe: "normal", 
@@ -56,6 +68,8 @@ export function computeAnalytics(data: StoreData[], simulation: SimulationParams
     if (d.custo_m2 > mean + std) classe = "alto";
     if (d.custo_m2 < mean - std) classe = "baixo";
 
+    // Distorção: Se o CRD Financeiro é maior que o CRD de Área, a loja está pagando proporcionalmente mais do que deveria (ou vice-versa dependendo do peso do tipo da loja)
+    // Para simplificar a auditoria, impacto financeiro continua focado no custo/m2 outlier
     const diff = d.custo_m2 - mean;
     const impacto = diff * d.area;
 

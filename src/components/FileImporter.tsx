@@ -5,9 +5,10 @@
 
 import React, { useRef } from "react";
 import * as XLSX from "xlsx";
-import { Upload } from "lucide-react";
+import { Upload, Download } from "lucide-react";
 import { useDashboardStore } from "../store/useDashboardStore";
 import { StoreData } from "../types";
+import { downloadTemplate } from "../utils/export";
 
 export const FileImporter = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -43,21 +44,28 @@ export const FileImporter = () => {
   };
 
   return (
-    <div className="flex items-center">
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileUpload}
-        className="hidden"
-        accept=".xlsx, .xls, .csv"
-      />
+    <div className="flex items-center space-x-3">
       <button
-        onClick={() => fileInputRef.current?.click()}
-        className="flex items-center space-x-2 px-4 py-2 bg-emerald-600 text-white rounded-2xl text-sm font-bold shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition-all"
+        onClick={downloadTemplate}
+        className="inline-flex items-center justify-center gap-2 px-3 py-2 bg-transparent text-slate-500 rounded-xl text-[10px] font-bold hover:bg-slate-100 hover:text-slate-900 transition-all active:scale-95 uppercase tracking-widest"
       >
-        <Upload size={16} />
-        <span>Importar Excel/CSV</span>
+        <Download size={14} />
+        <span className="hidden sm:inline">Baixar Modelo</span>
       </button>
+
+      <div className="h-10 w-[1px] bg-slate-200/50 hidden sm:block" />
+
+      <label className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white border-2 border-dashed border-slate-300 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-50 hover:border-indigo-300 transition-all active:scale-95 uppercase tracking-widest cursor-pointer">
+        <Upload size={16} />
+        <span className="hidden sm:inline">Importar Planilha</span>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileUpload}
+          className="hidden"
+          accept=".xlsx, .xls, .csv"
+        />
+      </label>
     </div>
   );
 };

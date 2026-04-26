@@ -71,11 +71,12 @@ export const useDashboardStore = create<DashboardState>()(
 
       loadSampleData: () => set({
         data: [
-          { id: "1", loja: "Âncora Riachuelo", tipo: "Âncora", area: 2500, condominio: 45000, status: "ativa", faturado: 120000, pago: 110000 },
-          { id: "2", loja: "Starbucks", tipo: "Satélite", area: 45, condominio: 6500, status: "ativa", faturado: 15000, pago: 15000 },
+          // faturado = Vendas da loja. pago = Valor do condomínio efetivamente pago.
+          { id: "1", loja: "Âncora Riachuelo", tipo: "Âncora", area: 2500, condominio: 45000, status: "ativa", faturado: 1200000, pago: 45000 },
+          { id: "2", loja: "Starbucks", tipo: "Satélite", area: 45, condominio: 6500, status: "ativa", faturado: 150000, pago: 6500 },
           { id: "3", loja: "Praça de Alimentação 01", tipo: "Serviço", area: 120, condominio: 8000, status: "vaga", faturado: 0, pago: 0 },
-          { id: "4", loja: "Nike Store", tipo: "Satélite", area: 150, condominio: 12000, status: "ativa", faturado: 35000, pago: 28000 },
-          { id: "5", loja: "Cinema IMAX", tipo: "Âncora", area: 3000, condominio: 55000, status: "ativa", faturado: 200000, pago: 200000 },
+          { id: "4", loja: "Nike Store", tipo: "Satélite", area: 150, condominio: 12000, status: "ativa", faturado: 80000, pago: 9000 }, // 25% Inadimplente no condomínio, CTO 15%
+          { id: "5", loja: "Cinema IMAX", tipo: "Âncora", area: 3000, condominio: 55000, status: "ativa", faturado: 850000, pago: 55000 },
         ],
         loading: false,
         error: null

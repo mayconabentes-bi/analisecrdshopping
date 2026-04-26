@@ -76,10 +76,10 @@ export const AddStoreModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Nome da Loja</label>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Nome da Loja</label>
                 <input 
                   required
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
                   value={formData.loja}
                   onChange={e => setFormData({...formData, loja: e.target.value})}
                   placeholder="Ex: Starbucks"
@@ -88,9 +88,9 @@ export const AddStoreModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Tipo</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Tipo</label>
                   <select 
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all appearance-none"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all appearance-none"
                     value={formData.tipo}
                     onChange={e => setFormData({...formData, tipo: e.target.value as StoreType})}
                   >
@@ -100,9 +100,9 @@ export const AddStoreModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: (
                   </select>
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Status</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Status</label>
                   <select 
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all appearance-none"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all appearance-none"
                     value={formData.status}
                     onChange={e => setFormData({...formData, status: e.target.value as StoreStatus})}
                   >
@@ -114,21 +114,21 @@ export const AddStoreModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Área (m²)</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Área (m²)</label>
                   <input 
                     type="number"
                     required
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
                     value={formData.area}
                     onChange={e => setFormData({...formData, area: e.target.value})}
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Condomínio (R$)</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Cond. Cobrado (R$)</label>
                   <input 
                     type="number"
                     required
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
                     value={formData.condominio}
                     onChange={e => setFormData({...formData, condominio: e.target.value})}
                   />
@@ -137,34 +137,41 @@ export const AddStoreModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Faturado (R$)</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Vendas Loja (R$)</label>
                   <input 
                     type="number"
                     required
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
                     value={formData.faturado}
                     onChange={e => setFormData({...formData, faturado: e.target.value})}
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Pago (R$)</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Cond. Pago (R$)</label>
                   <input 
                     type="number"
                     required
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:bg-white outline-none transition-all"
                     value={formData.pago}
                     onChange={e => setFormData({...formData, pago: e.target.value})}
                   />
                 </div>
               </div>
-
-              <button 
-                type="submit"
-                className="w-full mt-4 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all flex items-center justify-center space-x-2"
-              >
-                <Plus size={18} />
-                <span>Salvar Unidade</span>
-              </button>
+              <div className="p-8 border-t border-slate-100 flex justify-end space-x-3 bg-slate-50/50 -mx-8 -mb-8 mt-6">
+                <button 
+                  type="button" 
+                  onClick={onClose} 
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-slate-500 rounded-xl text-xs font-bold hover:bg-slate-100 hover:text-slate-900 transition-all active:scale-95 uppercase tracking-widest"
+                >
+                  Cancelar
+                </button>
+                <button 
+                  type="submit" 
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 hover:shadow-[0_10px_15px_-3px_rgba(199,210,254,0.5)] transition-all active:scale-95 uppercase tracking-widest shadow-sm"
+                >
+                  Adicionar Unidade
+                </button>
+              </div>
             </form>
           </motion.div>
         </>

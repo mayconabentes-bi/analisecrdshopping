@@ -50,12 +50,15 @@ export const AuditReportModal = ({ isOpen, onClose, analytics }: AuditReportModa
               <div className="flex items-center space-x-3">
                 <button 
                   onClick={() => exportToPDF(analytics)}
-                  className="flex items-center space-x-2 px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-black hover:shadow-[0_10px_15px_-3px_rgba(203,213,225,0.5)] transition-all active:scale-95 uppercase tracking-widest shadow-sm"
                 >
                   <Download size={18} />
                   <span>Exportar PDF</span>
                 </button>
-                <button onClick={onClose} className="p-3 hover:bg-gray-200 rounded-full text-gray-400 transition-colors">
+                <button 
+                  onClick={onClose} 
+                  className="inline-flex items-center justify-center p-2.5 bg-transparent text-slate-500 rounded-full hover:bg-slate-100 hover:text-slate-900 transition-all active:scale-95"
+                >
                   <X size={24} />
                 </button>
               </div>

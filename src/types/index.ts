@@ -21,7 +21,10 @@ export interface AnalyticsStore extends StoreData {
   s_pago: number;
   custo_m2: number;
   inadimplencia: number;
-  custo_ocupacao: number;
+  custo_ocupacao: number; // Manteve para legado, mas é o CTO
+  cto: number; // Custo Total de Ocupação (%)
+  crd_area: number; // Coeficiente de Rateio por Área (%)
+  crd_financeiro: number; // Participação Financeira no Condomínio Total (%)
   breakEven: number;
   esforco: number;
   classe: "alto" | "baixo" | "normal";

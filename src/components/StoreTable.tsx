@@ -18,56 +18,62 @@ export const StoreTable = ({ data }: StoreTableProps) => {
   const { selectedId, setSelectedId } = useDashboardStore();
 
   return (
-    <section className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-50 flex justify-between items-center">
-        <h2 className="font-bold text-gray-800 flex items-center">
-          <Store size={20} className="mr-2 text-indigo-500" />
-          Base Operacional de Lojas
+    <div className="overflow-x-auto">
+      <div className="px-8 py-6 border-b border-slate-50 flex justify-between items-center">
+        <h2 className="font-black text-slate-800 flex items-center text-sm uppercase tracking-widest">
+          <Store size={18} className="mr-3 text-indigo-500" />
+          Base Operacional
         </h2>
-        <div className="text-xs font-medium text-gray-400 uppercase tracking-wider">{data.length} Unidades</div>
+        <div className="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">{data.length} Unidades</div>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
           <thead>
-            <tr className="text-gray-400 uppercase text-[10px] tracking-widest font-bold">
-              <th className="px-6 py-4">Unidade</th>
-              <th className="px-6 py-4">Segmento</th>
-              <th className="px-6 py-4">Área</th>
-              <th className="px-6 py-4">Condomínio</th>
-              <th className="px-6 py-4">Preço/m²</th>
-              <th className="px-6 py-4 text-center">Peso no Fat.</th>
-              <th className="px-6 py-4 text-center">Atrasos</th>
-              <th className="px-6 py-4 text-center">Nível de Risco</th>
+            <tr className="text-slate-400 uppercase text-[9px] tracking-widest font-black whitespace-nowrap">
+              <th className="px-4 py-4">Unidade / Seg.</th>
+              <th className="px-4 py-4 text-right">Área</th>
+              <th className="px-4 py-4 text-right">Condomínio</th>
+              <th className="px-4 py-4 text-right">R$/m²</th>
+              <th className="px-4 py-4 text-center">CRD (%)</th>
+              <th className="px-4 py-4 text-center">CTO (%)</th>
+              <th className="px-4 py-4 text-center">Inadimp.</th>
+              <th className="px-4 py-4 text-center">Risco</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-slate-50 whitespace-nowrap">
             {data.map((d) => (
               <motion.tr 
                 key={d.id}
                 layoutId={d.id}
                 onClick={() => setSelectedId(d.id)}
-                className={`hover:bg-gray-100/50 cursor-pointer transition-colors ${selectedId === d.id ? 'bg-indigo-50/50' : ''}`}
+                className={`hover:bg-slate-50 cursor-pointer transition-colors ${selectedId === d.id ? 'bg-indigo-50/50' : ''}`}
               >
-                <td className="px-6 py-4">
-                  <div className="font-bold text-gray-900">{d.loja}</div>
-                  <div className="text-[10px] text-gray-400">ID: #{d.id}</div>
-                </td>
-                <td className="px-6 py-4">
-                  <span className="text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded-lg border border-gray-100">{d.tipo}</span>
-                </td>
-                <td className="px-6 py-4 font-medium">{d.area}m²</td>
-                <td className="px-6 py-4 text-gray-600">R$ {d.condominio.toLocaleString()}</td>
-                <td className="px-6 py-4 font-bold text-indigo-600">R$ {d.custo_m2.toFixed(2)}</td>
-                <td className="px-6 py-4 text-center">
-                  <div className={`text-xs font-black ${d.custo_ocupacao > 0.15 ? 'text-amber-500' : 'text-gray-900'}`}>
-                    {(d.custo_ocupacao * 100).toFixed(1)}%
+                <td className="px-4 py-4">
+                  <div className="font-bold text-slate-900">{d.loja}</div>
+                  <div className="flex items-center space-x-2 mt-0.5">
+                    <span className="text-[10px] text-slate-400">#{d.id}</span>
+                    <span className="text-[9px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-md">{d.tipo}</span>
                   </div>
-                  <div className="text-[9px] text-gray-400 uppercase font-bold">Peso</div>
                 </td>
-                <td className="px-6 py-4 text-center font-bold text-gray-600">
+                <td className="px-4 py-4 font-medium text-slate-700 text-right">{d.area}m²</td>
+                <td className="px-4 py-4 text-slate-600 text-right">R$ {d.condominio.toLocaleString()}</td>
+                <td className="px-4 py-4 font-bold text-indigo-600 text-right">R$ {d.custo_m2.toFixed(2)}</td>
+                <td className="px-4 py-4 text-center">
+                  <div className="text-xs font-bold text-slate-700" title={`Área: ${(d.crd_area*100).toFixed(1)}%`}>
+                    {(d.crd_financeiro * 100).toFixed(1)}%
+                  </div>
+                  <div className="text-[9px] text-slate-400 font-bold uppercase">Rateio</div>
+                </td>
+                <td className="px-4 py-4 text-center">
+                  <div className={`text-xs font-black ${d.cto > 0.15 ? 'text-amber-500' : 'text-slate-900'}`}>
+                    {(d.cto * 100).toFixed(1)}%
+                  </div>
+                  <div className="text-[9px] text-slate-400 uppercase font-bold">Faturam.</div>
+                </td>
+                <td className="px-4 py-4 text-center font-bold text-slate-600">
                   {(d.inadimplencia * 100).toFixed(0)}%
                 </td>
-                <td className="px-6 py-4 text-center">
+                <td className="px-4 py-4 text-center">
                   <div className={`inline-block px-3 py-1 rounded-xl text-xs font-black ${
                     d.esforco > 7 ? 'bg-red-50 text-red-600 border border-red-100' : 
                     d.esforco > 4 ? 'bg-amber-50 text-amber-600 border border-amber-100' : 
@@ -81,6 +87,6 @@ export const StoreTable = ({ data }: StoreTableProps) => {
           </tbody>
         </table>
       </div>
-    </section>
+    </div>
   );
 };
